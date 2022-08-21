@@ -1,0 +1,59 @@
+/* import image1 from "../../../../image/pic1.jpg"; */
+
+.image1 {
+  background-image: url("../../../../image/pic1.jpg");
+  height: 500px;
+  background-position: center;
+  background-size: cover;
+}
+.image2 {
+  background-image: url("../../../../image/pic2.jpg");
+  height: 500px;
+  background-position: center;
+  background-size: cover;
+}
+.image3 {
+  background-image: url("../../../../image/pic3.jpg");
+  height: 500px;
+  background-position: center;
+  background-size: cover;
+}
+
+@media (max-width: 1399px) {
+  .image1 {
+    height: 400px;
+  }
+  .image2 {
+    height: 400px;
+  }
+  .imag3 {
+    height: 400px;
+  }
+}
+@media (max-width: 890px) {
+  .no-item-text{
+    width: 100%;
+  }
+  .image1 {
+    height: 350px;
+  }
+  .image2 {
+    height: 350px;
+  }
+  .imag3 {
+    height: 350px;
+  }
+}
+.no-item-text {
+  width: 87%;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.no-item-text .text {
+  font-size: 35px;
+  color: goldenrod;
+}
+
