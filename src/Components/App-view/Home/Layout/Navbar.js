@@ -37,7 +37,7 @@ useEffect(()=>{
     <>
     <nav className="navbar navbar-expand-lg navbar-dark navbar-bg">
      <div className="container">
-   
+   <div className="d-flex align-items-center">
         <AiOutlineMenuUnfold onClick={()=>handleShowsidebar()} className="menu-icon"/>
         <Link className="navbar-brand" to="/">
           <img
@@ -47,6 +47,7 @@ useEffect(()=>{
             border="0"
           />
         </Link>
+        </div>
         <div className="d-flex align-items-center ">
         {!User?.email ? (
               <div className="nav-item">

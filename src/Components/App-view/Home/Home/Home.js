@@ -19,6 +19,7 @@ import Slider from "react-slick";
 import "./Home.css";
 import { getAllData } from "../../../../Api/CommonService";
 import { get_all_food } from "../../../../Api/ApiConstant";
+import { AiFillPlusCircle, AiOutlinePlusCircle } from "react-icons/ai";
 const { Meta } = Card;
 const { Search } = Input;
 const Home = ({ setShow, show }) => {
@@ -32,54 +33,7 @@ const Home = ({ setShow, show }) => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-  const burger = [
-    {
-      id: 1,
-      name: "Chicken Regular",
-      price: 70,
-      image:
-        "https://s3-ap-southeast-1.amazonaws.com/sb-singleserver-prod-bucket/7716b2a6dc519006aec3264cbc050f82/o_1501478548.jpg",
-    },
-    {
-      id: 2,
-      name: "Tandoori Chicken Burger",
-      price: 120,
-      image: "https://img.rasset.ie/0015cf21-800.jpg",
-    },
-    {
-      id: 3,
-      name: "Crispy Chicken Burger",
-      price: 100,
-      image:
-        "https://www.dontgobaconmyheart.co.uk/wp-content/uploads/2020/04/crispy-chicken-burger-744x897.jpg",
-    },
-    {
-      id: 4,
-      name: "Beef Burger",
-      price: 150,
-      image:
-        "https://static.onecms.io/wp-content/uploads/sites/52/2020/05/17/jamaican-beef-patty-burger-f79e5df1b-1.jpg",
-    },
-    ,
-    {
-      id: 5,
-      name: "Tandoori Chicken Burger",
-      price: 120,
-      image: "https://img.rasset.ie/0015cf21-800.jpg",
-    },
-    {
-      id: 5,
-      name: "Tandoori Chicken Burger",
-      price: 120,
-      image: "https://img.rasset.ie/0015cf21-800.jpg",
-    },
-    {
-      id: 5,
-      name: "Tandoori Chicken Burger",
-      price: 120,
-      image: "https://img.rasset.ie/0015cf21-800.jpg",
-    },
-  ];
+
   const onChange = (currentSlide) => {
     console.log(currentSlide);
   };
@@ -172,18 +126,32 @@ const Home = ({ setShow, show }) => {
                           width: 240,
                         }}
                         cover={
-                          <img
-                            style={{ height: "170px" }}
-                            alt="example"
-                            src={e.image}
-                          />
+                          <div style={{ height: "180px", paddingTop: "10px" }}>
+                            <img
+                              style={{
+                                height: "100%",
+                                width: "100%",
+                                objectFit: "contain",
+                                objectPosition: "center",
+                                padding: "2px",
+                              }}
+                              alt="example"
+                              src={e.image}
+                            />
+                          </div>
                         }
                       >
                         <div className="text-center">
-                          <Typography>
+                          <Typography style={{height:"40px"}}>
                             {e.name} ৳{e.price}
                           </Typography>
-                          <Button className="mt-2">Add to Cart</Button>
+                          <Button className="mt-2">
+                            {" "}
+                            <AiOutlinePlusCircle
+                              style={{ marginRight: "10px", marginTop: "-5px" }}
+                            />{" "}
+                            Add to Cart
+                          </Button>
                         </div>
                       </Card>
                     </Col>
@@ -191,7 +159,11 @@ const Home = ({ setShow, show }) => {
                 </>
               ) : (
                 <Col className=" no-item-text ">
-                  <Image className="img" preview={false} src="https://i.pinimg.com/originals/e2/78/13/e27813e577548baadaa53ad737b6a5cd.gif"/>
+                  <Image
+                    className="img"
+                    preview={false}
+                    src="https://i.pinimg.com/originals/e2/78/13/e27813e577548baadaa53ad737b6a5cd.gif"
+                  />
                   <Typography className="text">No Item Available</Typography>
                 </Col>
               )}

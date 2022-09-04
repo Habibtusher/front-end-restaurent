@@ -8,8 +8,8 @@ const Dashboard = ({show,setShow}) => {
     return (
         <div>
           <Row >
-            <Col span={3}> <Adminsidebar current={current} setCurrent={setCurrent}  setShow={setShow} show={show}/></Col>
-            <Col span={20}> 
+            <Col xl={3} lg={0}> <Adminsidebar current={current} setCurrent={setCurrent}  setShow={setShow} show={show}/></Col>
+            <Col xl={20} lg={24}> 
             {
                 current == 1 && <AllFoods/>
             }

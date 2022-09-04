@@ -14,7 +14,7 @@ const AllFoods = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectId, setSelectId] = useState();
   const [singleFood, setSingleFood] = useState();
-  const [status,setStatus] = useState("")
+  const [status, setStatus] = useState("");
   const getAllFood = async () => {
     setLoading(true);
     const { data } = await getAllData(get_all_food);
@@ -26,39 +26,35 @@ const AllFoods = () => {
   }, []);
 
   const deleteFood = async () => {
-   const value ={
-    id : selectId
-   }
-   const {data}= await deleteItem(delete_food,value);
-   console.log(data);
-   if(data.status === "success"){
-    message.success(data.message)
-  
-   }
-   getAllFood();
-   setDeleteModal(false);
+    const value = {
+      id: selectId,
+    };
+    const { data } = await deleteItem(delete_food, value);
+    console.log(data);
+    if (data.status === "success") {
+      message.success(data.message);
+    }
+    getAllFood();
+    setDeleteModal(false);
   };
   const handleDelete = async (id) => {
     setSelectId(id);
     setDeleteModal(true);
   };
-const handleEdit =(id)=>{
-  const editFood = allFoods.find((e)=> e._id === id);
-  setStatus("edit");
-  setSingleFood(editFood);
-  setShowModal(true);
-}
+  const handleEdit = (id) => {
+    const editFood = allFoods.find((e) => e._id === id);
+    setStatus("edit");
+    setSingleFood(editFood);
+    setShowModal(true);
+  };
   const columns = [
     {
       title: <Typography className="dashboard-table-header">Image</Typography>,
       dataIndex: "name",
       key: "name",
       render: (_, record) => {
-        return (
-          <Image
-            style={{ width: "100px", height: "50px" }}
-            src={record.image}
-          />
+        return (         
+            <Image className="dashboard-allfood-img"  src={record.image} />      
         );
       },
     },
@@ -114,7 +110,10 @@ const handleEdit =(id)=>{
       render: (_, record) => {
         return (
           <div className="d-flex align-items-center all-food">
-            <FiEdit onClick={()=> handleEdit(record._id)} className="edit-icon" />
+            <FiEdit
+              onClick={() => handleEdit(record._id)}
+              className="edit-icon"
+            />
             <RiDeleteBin6Line
               onClick={() => handleDelete(record._id)}
               className="delete-icon"
@@ -124,15 +123,18 @@ const handleEdit =(id)=>{
       },
     },
   ];
-  
+
   return (
     <div className="p-2">
       <div style={{ textAlign: "right" }} className="mb-3">
         {" "}
-        <Button onClick={() => {
-          setShowModal(true);
-          setStatus("add")
-        }} className="button-style">
+        <Button
+          onClick={() => {
+            setShowModal(true);
+            setStatus("add");
+          }}
+          className="button-style"
+        >
           Add new
         </Button>
       </div>
@@ -140,8 +142,8 @@ const handleEdit =(id)=>{
         <Table scroll={{ x: true }} dataSource={allFoods} columns={columns} />
       </Spin>
       <AddFoodModal
-      status={status}
-      singleFood={singleFood}
+        status={status}
+        singleFood={singleFood}
         getAllFood={getAllFood}
         setShowModal={setShowModal}
         showModal={showModal}

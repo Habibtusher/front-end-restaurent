@@ -31,6 +31,7 @@ function getItem(label, key, icon, children, type) {
 
 const items = [
   getItem("Menu", "Menu", <GiForkKnifeSpoon />, [
+    getItem("All Item", ""),
     getItem("Chicken Special", "Chicken Special"),
     getItem("Soup", "Soup"),
     getItem("Sub & Burger", "Sub & Burger"),

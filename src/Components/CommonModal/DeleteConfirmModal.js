@@ -6,7 +6,9 @@ const DeleteConfirmModal = ({
   deleteConfirmVisible,
   setDeleteConfirmVisible,
   onFinish,
+  setNewValu
 }) => {
+
   return (
     <div>
       <Modal

@@ -25,7 +25,11 @@ import UpdateUserModal from "./UpdateUserModal";
 import { DeleteOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 import DeleteConfirmModal from "../../../CommonModal/DeleteConfirmModal";
-import { deleteUserProfile, getData, updateProfile } from "../../../../Api/CommonService";
+import {
+  deleteUserProfile,
+  getData,
+  updateProfile,
+} from "../../../../Api/CommonService";
 const { Paragraph, Text } = Typography;
 const { Link } = Anchor;
 const UserProfile = () => {
@@ -38,6 +42,7 @@ const UserProfile = () => {
   const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
   const User = JSON.parse(localStorage.getItem("user"));
   const access_token = JSON.parse(localStorage.getItem("access_token"));
+  const [newValue, setNewValu] = useState();
   const history = useHistory();
   const url = `${get_user}?email=${User.email}`;
   const config = {
@@ -58,7 +63,6 @@ const UserProfile = () => {
     }
     setLoading(false);
   };
-
   const onFinish = async (values) => {
     setLoading(true);
     const newData = {
@@ -81,7 +85,7 @@ const UserProfile = () => {
     try {
       const { data } = await updateProfile(
         `${update_user_profile}${User.email}`,
-        newData,
+        newData
       );
       if (data.status === "success") {
         message.success("profile update successfully");
@@ -122,9 +126,7 @@ const UserProfile = () => {
   };
   const deleteUserConfirm = async () => {
     try {
-      const { data } = await deleteUserProfile(
-        `${delete_user}${User.email}`,
-      );
+      const { data } = await deleteUserProfile(`${delete_user}${User.email}`);
       if (data.status === "success") {
         message.success("profile deleted successfully");
         localStorage.removeItem("user");
@@ -333,7 +335,12 @@ const UserProfile = () => {
                     ></Button>
                   </div>
                 </div>
-                <Form className="mt-3" layout="vertical" form={form} onFinish={onFinish}>
+                <Form
+                  className="mt-3"
+                  layout="vertical"
+                  form={form}
+                  onFinish={onFinish}
+                >
                   <Form.Item
                     name="firstName"
                     label="First Name"
@@ -425,6 +432,7 @@ const UserProfile = () => {
               <Card className="p-3">
                 <Typography style={{ fontSize: "20px" }}>
                   Order History
+                 
                 </Typography>
               </Card>
             </div>
@@ -447,6 +455,7 @@ const UserProfile = () => {
             </div>
           </Col>
           <DeleteConfirmModal
+            setNewValu={setNewValu}
             deleteConfirmVisible={deleteConfirmVisible}
             setDeleteConfirmVisible={setDeleteConfirmVisible}
             onFinish={deleteUserConfirm}
