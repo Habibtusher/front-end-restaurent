@@ -51,12 +51,12 @@ const items = [
   //     getItem("Option 8", "8"),
   //   ]),
   // ]),
-  getItem("Navigation Three", "sub4", <SettingOutlined />, [
-    getItem("Option 9", "9"),
-    getItem("Option 10", "10"),
-    getItem("Option 11", "11"),
-    getItem("Option 12", "12"),
-  ]),
+  // getItem("Navigation Three", "sub4", <SettingOutlined />, [
+  //   getItem("Option 9", "9"),
+  //   getItem("Option 10", "10"),
+  //   getItem("Option 11", "11"),
+  //   getItem("Option 12", "12"),
+  // ]),
 ];
 const Sidenav = ({setShow ,show,setFilterCategory}) => {
   const [visibleSidebar, setVisibleSidebar] = useState(false);

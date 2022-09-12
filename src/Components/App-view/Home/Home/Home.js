@@ -37,7 +37,7 @@ const Home = ({ setShow, show }) => {
   const onChange = (currentSlide) => {
     console.log(currentSlide);
   };
-  console.log("object", filterCategory);
+  
   const onSearch = async (e) => {
     console.log(e);
     setLoading(true);
@@ -113,7 +113,7 @@ const Home = ({ setShow, show }) => {
               show={show}
             />
           </Col>
-          <Col className="food-item" sm={23} lg={20}>
+          <Col className="food-item pb-3" sm={23} lg={20}>
             <Row gutter={[10, 10]}>
               {allFoods.length ? (
                 <>
@@ -159,11 +159,11 @@ const Home = ({ setShow, show }) => {
                 </>
               ) : (
                 <Col className=" no-item-text ">
-                  <Image
+                  {/* <Image
                     className="img"
                     preview={false}
                     src="https://i.pinimg.com/originals/e2/78/13/e27813e577548baadaa53ad737b6a5cd.gif"
-                  />
+                  /> */}
                   <Typography className="text">No Item Available</Typography>
                 </Col>
               )}
