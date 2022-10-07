@@ -8,10 +8,14 @@ import { getData } from "../../../../Api/CommonService.js";
 import { BsFillBagPlusFill } from "react-icons/bs";
 import "./layout.css";
 import { Badge, Typography } from "antd";
+import { useSelector } from "react-redux";
 const Navbar = ({ setShow }) => {
   const User = JSON.parse(localStorage.getItem("user"));
   const [userProfile, setUserProfile] = useState();
   const url = `${get_user}?email=${User?.email}`;
+
+  const cartCount = useSelector((state) => state.cart.numberCart);
+
   const handleShowsidebar = () => {
     setShow(true);
   };
@@ -31,7 +35,7 @@ const Navbar = ({ setShow }) => {
   }, []);
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark navbar-bg">
+      <nav style={{zIndex:"111"}} className="navbar navbar-expand-lg navbar-dark navbar-bg fixed-top">
         <div className="container">
           <div className="d-flex align-items-center">
             <AiOutlineMenuUnfold
@@ -61,9 +65,11 @@ const Navbar = ({ setShow }) => {
                 user={User}
               />
             )}
-            <Badge count={3}>
+            <NavLink className="nav-link" to="/app/cart">
+            <Badge count={cartCount}>
               <BsFillBagPlusFill className="cart-icon" />
             </Badge>
+            </NavLink>
           </div>
         </div>
       </nav>

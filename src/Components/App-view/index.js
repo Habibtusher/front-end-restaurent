@@ -7,13 +7,15 @@ import Sidenav from "./Home/Layout/Sidenav.js";
 import UserProfile from "./Home/UserProfile/UserProfile.js";
 import MessengerCustomerChat from "react-messenger-customer-chat";
 import Dashboard from "./Admin/Dashboard/Dashboard.js";
+import Cart from "./Cart/Cart.js";
 function AppView({ match }) {
   const [show,setShow] = useState(false)
   console.log(match);
   return (
     <>
       <Navbar setShow={setShow} show={show}/>
-      <Switch>
+      <div style={{marginTop:"71px"}}>
+          <Switch>
         <Route path={`${match.url}/home`}>
           <Home setShow={setShow} show={show} />
         </Route>
@@ -23,10 +25,15 @@ function AppView({ match }) {
         <Route path={`${match.url}/admin/dashboard`}>
           <Dashboard setShow={setShow} show={show} />
         </Route>
+        <Route path={`${match.url}/cart`}>
+          <Cart  />
+        </Route>
         <Route path={`${match.url}`}>
           <Redirect from={`${match.url}`} to={`${match.url}/home`} />
         </Route>
       </Switch>
+      </div>
+    
       <MessengerCustomerChat
         pageId="100761755404496"
         appId="425024506257537"

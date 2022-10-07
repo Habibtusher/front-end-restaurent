@@ -100,6 +100,7 @@ const Sidenav = ({setShow ,show,setFilterCategory}) => {
       </div>
       <div className="drawer-sidebar">
        <Drawer
+       style={{zIndex:"999"}}
         placement={placement}
         width={260}
         closable={false}

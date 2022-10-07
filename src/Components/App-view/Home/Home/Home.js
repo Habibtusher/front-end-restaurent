@@ -20,12 +20,24 @@ import "./Home.css";
 import { getAllData } from "../../../../Api/CommonService";
 import { get_all_food } from "../../../../Api/ApiConstant";
 import { AiFillPlusCircle, AiOutlinePlusCircle } from "react-icons/ai";
+import StripeCheckout from "react-stripe-checkout";
+import { resolveOnChange } from "antd/lib/input/Input";
+import { useDispatch, useSelector } from "react-redux";
+import { increment } from "../../../../redux/Cart/actions";
 const { Meta } = Card;
 const { Search } = Input;
 const Home = ({ setShow, show }) => {
   const [allFoods, setAllFoods] = useState([]);
   const [filterCategory, setFilterCategory] = useState();
   const [loading, setLoading] = useState(false);
+  const [product, setProduct] = useState({
+    name: "T-shirt",
+    price: 100,
+    productBy: "yellow",
+  });
+  // const cart = useSelector((state) => state.conter.value);
+  const dispatch = useDispatch();
+
   const settings = {
     dots: true,
     infinite: true,
@@ -37,7 +49,7 @@ const Home = ({ setShow, show }) => {
   const onChange = (currentSlide) => {
     console.log(currentSlide);
   };
-  
+
   const onSearch = async (e) => {
     console.log(e);
     setLoading(true);
@@ -61,6 +73,11 @@ const Home = ({ setShow, show }) => {
   useEffect(() => {
     getAllFood();
   }, [filterCategory]);
+
+  const handleAddToCart =(item)=>{
+    dispatch(increment(item));
+console.log("item",item);
+  }
   return (
     <div>
       <div className="carusel">
@@ -142,15 +159,18 @@ const Home = ({ setShow, show }) => {
                         }
                       >
                         <div className="text-center">
-                          <Typography style={{height:"40px"}}>
+                          <Typography style={{ height: "40px" }}>
                             {e.name} ৳{e.price}
                           </Typography>
-                          <Button className="mt-2">
-                            {" "}
+                          <Button
+                          onClick={()=>handleAddToCart(e)}
+                           className="mt-2">
+                          
+                       
                             <AiOutlinePlusCircle
                               style={{ marginRight: "10px", marginTop: "-5px" }}
                             />{" "}
-                            Add to Cart
+                            Add to cart
                           </Button>
                         </div>
                       </Card>
@@ -171,6 +191,8 @@ const Home = ({ setShow, show }) => {
           </Col>
         </Row>
       </Spin>
+    
+      
     </div>
   );
 };
