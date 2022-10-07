@@ -2,6 +2,7 @@ import { Button, Modal, Radio, Space, Typography } from "antd";
 import React, { useState } from "react";
 import StripeCheckout from "react-stripe-checkout";
 import {MdOutlineDownloadDone} from "react-icons/md"
+import { base_url } from "../../../Api/Baseurl";
 const CheckOutModal = ({ checkOutModal, setCheckOutModal }) => {
   const [value, setValue] = useState(1);
   const [product, setProduct] = useState({
@@ -25,7 +26,7 @@ const CheckOutModal = ({ checkOutModal, setCheckOutModal }) => {
       "Content-Type": "application/json",
     };
 
-    return fetch(`http://localhost:5000/payment`, {
+    return fetch(`${base_url}/payment`, {
       method: "POST",
       headers,
       body: JSON.stringify(body),
