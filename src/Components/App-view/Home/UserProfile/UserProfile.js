@@ -10,6 +10,7 @@ import {
   Row,
   Spin,
   Switch,
+  Table,
   Typography,
   Upload,
 } from "antd";
@@ -17,6 +18,7 @@ import React, { useEffect, useState } from "react";
 import {
   delete_user,
   get_user,
+  order_by_email,
   update_user_profile,
 } from "../../../../Api/ApiConstant";
 import Sidenav from "../Layout/Sidenav";
@@ -30,6 +32,8 @@ import {
   getData,
   updateProfile,
 } from "../../../../Api/CommonService";
+import "./userProfile.css";
+import ViewOrderDetails from "./ViewOrderDetails";
 const { Paragraph, Text } = Typography;
 const { Link } = Anchor;
 const UserProfile = () => {
@@ -40,9 +44,12 @@ const UserProfile = () => {
   const [loading, setLoading] = useState(false);
   const [buttonLoading, setButtonLoading] = useState(false);
   const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
+  const [itemsDetailsModal, setItemsDetailsModal] = useState(false);
   const User = JSON.parse(localStorage.getItem("user"));
   const access_token = JSON.parse(localStorage.getItem("access_token"));
   const [newValue, setNewValu] = useState();
+  const [orders, setOrders] = useState();
+  const [itemDetails, setItemDetails] = useState();
   const history = useHistory();
   const url = `${get_user}?email=${User.email}`;
   const config = {
@@ -62,6 +69,17 @@ const UserProfile = () => {
       console.log(err);
     }
     setLoading(false);
+  };
+  const getOrder = async () => {
+    try {
+      const { data } = await getData(`${order_by_email}?email=${User.email}`);
+
+      if (data.status === "success") {
+        setOrders(data.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
   const onFinish = async (values) => {
     setLoading(true);
@@ -96,6 +114,7 @@ const UserProfile = () => {
       console.log(err);
     }
     setLoading(false);
+    localStorage.setItem("user", JSON.stringify(newData));
   };
   form.setFieldsValue({
     firstName: userProfile?.firstName,
@@ -120,6 +139,7 @@ const UserProfile = () => {
   });
   useEffect(() => {
     getProfile();
+    getOrder();
   }, []);
   const handleDeleteAccount = async () => {
     setDeleteConfirmVisible(true);
@@ -194,9 +214,110 @@ const UserProfile = () => {
       console.log(err);
     }
   };
+  const handleViewDetails = (id) => {
+    const singleOrder = orders.find((e) => e._id === id);
+    console.log(singleOrder?.items.Carts);
+    setItemDetails(singleOrder?.items.Carts);
+    setItemsDetailsModal(true);
+  };
+  function formatDate(date) {
+    var d = new Date(date),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [day, month, year].join("-");
+  }
+  const columns = [
+    {
+      title: <Typography className="dashboard-table-header text-center">Items</Typography>,
+      dataIndex: "name",
+      key: "name",
+      render: (_, record) => {
+        return (
+          <Typography
+            onClick={() => {
+              handleViewDetails(record._id);
+            }}
+            className="items-detail text-center"
+          >
+            View Items
+          </Typography>
+          // <div className="">
+          //   {
+          //     record.items.Carts?.map((e)=>(
+
+          //       <p className="items-detail">{e.name} x {e.quantity}</p>
+
+          //       ))
+          //   }
+
+          // </div>
+        );
+      },
+    },
+    {
+      title: (
+        <Typography className="dashboard-table-header text-center">
+          Payment Status
+        </Typography>
+      ),
+      dataIndex: "paymentStatus",
+      key: "paymentStatus",
+      render: (_, record) => {
+        return (
+          <div className="d-flex align-items-center justify-content-center">
+            <Typography>{record.paymentStatus}</Typography>
+          </div>
+        );
+      },
+    },
+    {
+      title: (
+        <Typography className="dashboard-table-header text-center">Total Price</Typography>
+      ),
+      dataIndex: "totalAmount",
+      key: "totalAmount",
+      render: (_, record) => {
+        return (
+          <div className="d-flex align-items-center justify-content-center">
+            <Typography>৳{record.totalAmount}</Typography>
+          </div>
+        );
+      },
+    },
+    {
+      title: <Typography className="dashboard-table-header text-center">Status</Typography>,
+      dataIndex: "discountPrice",
+      key: "discountPrice",
+      render: (_, record) => {
+        return (
+          <div className="d-flex align-items-center justify-content-center">
+            <Typography>{record.status}</Typography>
+          </div>
+        );
+      },
+    },
+    {
+      title: <Typography className="dashboard-table-header text-center">Date</Typography>,
+      dataIndex: "date",
+      key: "date",
+      render: (_, record) => {
+        return (
+          <Typography className="d-flex align-items-center justify-content-center">
+            {" "}
+            {formatDate(record.date)}
+          </Typography>
+        );
+      },
+    },
+  ];
   return (
     <Spin spinning={loading}>
-      <div className="container mt-4">
+      <div className="container user-top ">
         <div style={{ display: "flex" }}>
           <Avatar
             size={50}
@@ -230,8 +351,7 @@ const UserProfile = () => {
               style={{
                 width: 200,
                 padding: "10px",
-                position: "sticky",
-                top: "5%",
+               
               }}
             >
               <Anchor affix={false} targetOffset={targetOffset}>
@@ -268,9 +388,9 @@ const UserProfile = () => {
             </Card>
           </Col>
           <Col
-            className=" profile-body"
-            md={{ span: 12 }}
-            lg={{ span: 12 }}
+            className=" "
+            md={{ span: 18 }}
+            lg={{ span: 18 }}
             xs={{ span: 24 }}
             style={{ position: "relative" }}
           >
@@ -410,12 +530,7 @@ const UserProfile = () => {
                     <Input disabled={modal1Visible} />
                   </Form.Item>
                   <Col span={24} style={{ textAlign: "right" }}>
-                    <Button
-                      style={{ marginRight: "6px" }}
-                      onClick={() => setModal1Visible(false)}
-                    >
-                      Cancel
-                    </Button>
+                   
                     <Button
                       className="button-style"
                       htmlType="submit"
@@ -430,10 +545,14 @@ const UserProfile = () => {
             </Card>
             <div id="history" className="mt-3">
               <Card className="p-3">
-                <Typography style={{ fontSize: "20px" }}>
+                <Typography className="mb-2" style={{ fontSize: "20px" }}>
                   Order History
-                 
                 </Typography>
+                <Table
+                  scroll={{ x: true }}
+                  dataSource={orders}
+                  columns={columns}
+                />
               </Card>
             </div>
             <div id="security" className="mt-3 mb-5">
@@ -459,6 +578,11 @@ const UserProfile = () => {
             deleteConfirmVisible={deleteConfirmVisible}
             setDeleteConfirmVisible={setDeleteConfirmVisible}
             onFinish={deleteUserConfirm}
+          />
+          <ViewOrderDetails
+          itemsDetailsModal={itemsDetailsModal}
+          setItemsDetailsModal={setItemsDetailsModal}
+          itemDetails={itemDetails}
           />
         </Row>
       </div>

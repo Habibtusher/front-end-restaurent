@@ -1,4 +1,4 @@
-import { DECREMENT, INCREMENT,QDECREMENT,QINCREMENT } from "./actionType";
+import { CLEANCARTS, DECREMENT, INCREMENT,QDECREMENT,QINCREMENT } from "./actionType";
 
 export const increment = (value) => {
 
@@ -13,15 +13,20 @@ export const decrement = (value) => {
     payload: value,
   };
 };
-export const quantityDecrement = (value) => {
+export const quantityIncrement = (value) => {
   return {
     type: QINCREMENT,
     payload: value,
   };
 };
-export const quantityIncrement = (value) => {
+export const quantityDecrement = (value) => {
   return {
     type: QDECREMENT,
     payload: value,
+  };
+};
+export const cleanCart = (value) => {
+  return {
+    type: CLEANCARTS,
   };
 };

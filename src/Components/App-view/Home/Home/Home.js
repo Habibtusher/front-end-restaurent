@@ -19,11 +19,11 @@ import Slider from "react-slick";
 import "./Home.css";
 import { getAllData } from "../../../../Api/CommonService";
 import { get_all_food } from "../../../../Api/ApiConstant";
-import { AiFillPlusCircle, AiOutlinePlusCircle } from "react-icons/ai";
+import { AiFillPlusCircle, AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai";
 import StripeCheckout from "react-stripe-checkout";
 import { resolveOnChange } from "antd/lib/input/Input";
 import { useDispatch, useSelector } from "react-redux";
-import { increment } from "../../../../redux/Cart/actions";
+import { decrement, increment, quantityDecrement, quantityIncrement } from "../../../../redux/Cart/actions";
 const { Meta } = Card;
 const { Search } = Input;
 const Home = ({ setShow, show }) => {
@@ -35,8 +35,11 @@ const Home = ({ setShow, show }) => {
     price: 100,
     productBy: "yellow",
   });
+  const cartItem = useSelector((state) => state.cart);
   // const cart = useSelector((state) => state.conter.value);
   const dispatch = useDispatch();
+
+  console.log(cartItem);
 
   const settings = {
     dots: true,
@@ -74,9 +77,26 @@ const Home = ({ setShow, show }) => {
     getAllFood();
   }, [filterCategory]);
 
-  const handleAddToCart =(item)=>{
-    dispatch(increment(item));
-console.log("item",item);
+  const handleAddToCart = (item) => {
+    const cartItemCheck = cartItem.Carts?.find((e) => e._id === item._id);
+    if (cartItemCheck) {
+      dispatch(quantityIncrement(item));
+    } else {
+      dispatch(increment(item));
+    }
+  };
+  const decrementCartItem=(item)=>{
+    dispatch(quantityDecrement(item));
+    // const cartItemCheck = cartItem.Carts.find((e) => e._id === item._id);
+    // if(cartItemCheck.quantity > 1){
+    //   dispatch(quantityDecrement(item));
+    // }
+    // else{
+    //   dispatch(decrement(item))
+    // }
+  }
+  const incrementCartItem=(item)=>{
+    dispatch(quantityIncrement(item));
   }
   return (
     <div>
@@ -137,10 +157,12 @@ console.log("item",item);
                   {allFoods?.map((e) => (
                     <Col sm={12} md={8} lg={6} xxl={4}>
                       <Card
+
                         className="card-style"
                         hoverable
                         style={{
                           width: 240,
+                          
                         }}
                         cover={
                           <div style={{ height: "180px", paddingTop: "10px" }}>
@@ -162,16 +184,28 @@ console.log("item",item);
                           <Typography style={{ height: "40px" }}>
                             {e.name} ৳{e.price}
                           </Typography>
-                          <Button
-                          onClick={()=>handleAddToCart(e)}
-                           className="mt-2">
-                          
-                       
-                            <AiOutlinePlusCircle
-                              style={{ marginRight: "10px", marginTop: "-5px" }}
-                            />{" "}
-                            Add to cart
-                          </Button>
+                          {cartItem.Carts?.find((item) => item._id === e._id) ? (
+                            <div className="text-center incre-decre">
+                              <div className="d-flex align-items-center justify-content-around incre-decre-div">
+                               <AiOutlineMinusCircle  onClick={() => decrementCartItem(e)} className="minus" />
+                              {cartItem.Carts?.find((item) => item._id === e._id).quantity}
+                              <AiOutlinePlusCircle onClick={() => incrementCartItem(e)} className="plus" />
+                              </div>
+                            </div>
+                          ) : (
+                            <Button
+                              onClick={() => handleAddToCart(e)}
+                              className="mt-2"
+                            >
+                              <AiOutlinePlusCircle
+                                style={{
+                                  marginRight: "10px",
+                                  marginTop: "-5px",
+                                }}
+                              />{" "}
+                              Add to cart
+                            </Button>
+                          )}
                         </div>
                       </Card>
                     </Col>
@@ -191,8 +225,6 @@ console.log("item",item);
           </Col>
         </Row>
       </Spin>
-    
-      
     </div>
   );
 };

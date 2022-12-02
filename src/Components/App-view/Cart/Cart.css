@@ -91,3 +91,19 @@ th:last-child {
 .done-text{
   background-color: rgb(203, 243, 203);
 }
+.cart-div{
+  max-height: 350px;
+  overflow: auto;
+}
+.cart-div::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.cart-div {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.cart-top-div{
+  margin-top: 100px;
+}

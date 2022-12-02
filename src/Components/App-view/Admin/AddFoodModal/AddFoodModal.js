@@ -43,16 +43,18 @@ const AddFoodModal = ({
       discountPercent: values.discount_percent,
       ratting: 0,
     };
-    console.log(value);
+   
     const { data } = await create(insert_food, value);
     if (data.status === "success") {
       message.success(data.message);
 
       getAllFood();
     }
+    setLogoPreview()
+    form.resetFields();
     setShowModal(false);
   };
-  console.log("hgggggggggggggggggg",singleFood);
+
   useEffect(()=>{
    
     if(singleFood){
@@ -95,7 +97,11 @@ const AddFoodModal = ({
           top: 20,
         }}
         visible={showModal}
-        onCancel={() => setShowModal(false)}
+        onCancel={() => {
+          setLogoPreview()
+          form.resetFields();
+         setShowModal(false) 
+        }}
         footer={null}
       >
         <div className="d-flex mt-3 uploader">
@@ -201,7 +207,11 @@ const AddFoodModal = ({
           <div style={{ textAlign: "right" }}>
             <Button
               style={{ marginRight: "10px" }}
-              onClick={() => setShowModal(false)}
+              onClick={() => {
+                setLogoPreview()
+                form.resetFields()
+                 setShowModal(false)
+              }}
             >
               {" "}
               Cancel

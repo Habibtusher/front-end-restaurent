@@ -461,7 +461,10 @@ body {
   transition: background 0.3s ease;
 }
 .dashboard-allfood-img {
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   object-fit: contain;
+}
+.dashboard-right-side{
+  min-height: 90vh;
 }

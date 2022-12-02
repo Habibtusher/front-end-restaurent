@@ -1,5 +1,9 @@
-import { FieldTimeOutlined } from "@ant-design/icons";
-import { Button, Image, message, Spin, Table, Typography } from "antd";
+import {
+  FieldTimeOutlined,
+  PlusCircleOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
+import { Button, Image, Input, message, Spin, Table, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import { delete_food, get_all_food } from "../../../../Api/ApiConstant";
 import { deleteItem, getAllData } from "../../../../Api/CommonService";
@@ -15,6 +19,8 @@ const AllFoods = () => {
   const [selectId, setSelectId] = useState();
   const [singleFood, setSingleFood] = useState();
   const [status, setStatus] = useState("");
+  const [searchValue, setQuickSearchValue] = useState("");
+  const { Search } = Input;
   const getAllFood = async () => {
     setLoading(true);
     const { data } = await getAllData(get_all_food);
@@ -52,10 +58,14 @@ const AllFoods = () => {
       title: <Typography className="dashboard-table-header">Image</Typography>,
       dataIndex: "name",
       key: "name",
+      filteredValue: [searchValue],
+      onFilter: (value, record) => {
+        return String(record.name)
+          .toLocaleLowerCase()
+          .includes(value.toLocaleLowerCase());
+      },
       render: (_, record) => {
-        return (         
-            <Image className="dashboard-allfood-img"  src={record.image} />      
-        );
+        return <Image className="dashboard-allfood-img" src={record.image} />;
       },
     },
     {
@@ -125,20 +135,34 @@ const AllFoods = () => {
   ];
 
   return (
-    <div className="p-2">
-      <div style={{ textAlign: "right" }} className="mb-3">
-        {" "}
-        <Button
-          onClick={() => {
-            setShowModal(true);
-            setStatus("add");
-          }}
-          className="button-style"
-        >
-          Add new
-        </Button>
-      </div>
+    <div className="p-4">
+       <Typography className='orders-title'>Food List</Typography>
       <Spin spinning={loading} tip="Loading...">
+        <div className="d-flex justify-content-between py-4">
+          <Button
+            onClick={() => {
+              setShowModal(true);
+              setStatus("add");
+            }}
+            type="primary"
+          >
+            Add New
+          </Button>
+
+          <div className="mb-2 text-right">
+            <Search
+              enterButton="Search"
+              style={{ width: "300px" }}
+              placeholder="search"
+              onChange={(e) => {
+                setQuickSearchValue(e.target.value);
+              }}
+              onSearch={(value) => {
+                setQuickSearchValue(value);
+              }}
+            />
+          </div>
+        </div>
         <Table scroll={{ x: true }} dataSource={allFoods} columns={columns} />
       </Spin>
       <AddFoodModal

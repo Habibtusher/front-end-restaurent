@@ -1,4 +1,10 @@
-import { DECREMENT, INCREMENT } from "./actionType";
+import {
+  CLEANCARTS,
+  DECREMENT,
+  INCREMENT,
+  QDECREMENT,
+  QINCREMENT,
+} from "./actionType";
 
 const initialState = {
   numberCart: 0,
@@ -22,14 +28,48 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         numberCart: state.numberCart + 1,
       };
-    // case DECREMENT:
-    //   return {
-    //     ...state,
-    //     value: state.value - action.payload,
-    //   };
+    case DECREMENT:
+      const findIndex = state.Carts.filter((e) => e._id !== action.payload._id);
 
-    default:
+      state.Carts = findIndex;
+      return {
+        ...state,
+        numberCart: state.numberCart - 1,
+      };
+    case QINCREMENT:
+      const findData = state.Carts.findIndex(
+        (e) => e._id === action.payload._id
+      );
+
+      state.Carts[findData].quantity = state.Carts[findData].quantity + 1;
       return state;
+    case QDECREMENT:
+      const findDataa = state.Carts.findIndex(
+        (e) => e._id === action.payload._id
+      );
+      if (state.Carts[findDataa].quantity > 1) {
+        state.Carts[findDataa].quantity -= 1;
+        return state;
+      } else if (state.Carts[findDataa].quantity === 1) {
+        const findIndex = state.Carts.filter(
+          (e) => e._id !== action.payload._id
+        );
+
+        state.Carts = findIndex;
+        return {
+          ...state,
+          numberCart: state.numberCart - 1,
+        };
+      }
+    case CLEANCARTS:
+     
+      return {
+        numberCart: 0,
+        Carts: [],
+      } 
+     
+    default:
+    return state;
   }
 };
 

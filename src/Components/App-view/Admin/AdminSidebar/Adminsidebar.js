@@ -25,18 +25,19 @@ function getItem(label, key, icon, children, type) {
   const items = [
     getItem("Dashboard", "Dashboard", <GiForkKnifeSpoon />, [
       getItem("All Foods", "1"),
-      getItem("Add Admin", "2"),
+      getItem("Orders", "2"),
+      getItem("Add Admin", "3"),
     //   getItem("A", "Soup"),
     //   getItem("Sub & Burger", "Sub & Burger"),
     //   getItem("Combo Pack", "Combo Pack"),
      
     ]),
-    getItem("Navigation Three", "sub4", <SettingOutlined />, [
-      getItem("Option 9", "9"),
-      getItem("Option 10", "10"),
-      getItem("Option 11", "11"),
-      getItem("Option 12", "12"),
-    ]),
+    // getItem("Navigation Three", "sub4", <SettingOutlined />, [
+    //   getItem("Option 9", "9"),
+    //   getItem("Option 10", "10"),
+    //   getItem("Option 11", "11"),
+    //   getItem("Option 12", "12"),
+    // ]),
   ];
 
 const Adminsidebar = ({ show, setShow ,current, setCurrent}) => {

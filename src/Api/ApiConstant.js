@@ -8,6 +8,8 @@ export const delete_user = "/api/delete/user/";
 export const get_all_food = "/api/get-food";
 export const insert_food = "/api/add-food";
 export const delete_food = "/api/delete-food";
+export const generate_order = "/order/genarate-order";
+export const order_by_email = "/order/by-emaill";
 
 
 
