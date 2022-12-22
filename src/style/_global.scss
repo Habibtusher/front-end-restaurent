@@ -1,6 +1,5 @@
 body {
   margin: 0;
-  font-family: "Uchen", serif;
   background-color: #f8fbff;
 }
 .name {
@@ -465,6 +464,22 @@ body {
   height: 50px;
   object-fit: contain;
 }
+
 .dashboard-right-side{
+  min-height: 90vh;
+}
+.profile-steps{
+  padding: 10px 0px;
+  cursor: pointer;
+
+}
+.profile-steps:hover{
+  color: #282d32;
+}
+.profile-steps-selected{
+  font-weight: 700;
+  border-bottom: 1px solid #212529;
+}
+.dashboard-admin{
   min-height: 90vh;
 }

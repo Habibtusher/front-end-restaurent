@@ -14,7 +14,7 @@ const Navbar = ({ setShow }) => {
   const [userProfile, setUserProfile] = useState();
   const url = `${get_user}?email=${User?.email}`;
 
-  const cartCount = useSelector((state) => state.cart.numberCart);
+  const cartCount = useSelector((state) => state.cart.length)
 
   const handleShowsidebar = () => {
     setShow(true);

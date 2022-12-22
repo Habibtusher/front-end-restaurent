@@ -5,9 +5,9 @@ import AllFoods from "../AllFoods/AllFoods";
 import Orders from "../Orders/Orders";
 
 const Dashboard = ({ show, setShow }) => {
-  const [current, setCurrent] = useState("1");
+  const [current, setCurrent] = useState(1);
   return (
-    <div>
+    <div className="dashboard-admin">
       <Row>
         <Col xl={4} lg={0}>
           {" "}

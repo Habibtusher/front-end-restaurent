@@ -14,6 +14,7 @@ import {
 import { Link, useHistory } from "react-router-dom";
 const Cart = () => {
   const cartItem = useSelector((state) => state.cart);
+
   const [checkOutModal, setCheckOutModal] = useState(false);
   const [calculateTotalprice, setCalculateTotalprice] = useState();
   const history = useHistory();
@@ -29,40 +30,44 @@ const Cart = () => {
   };
   const handleRemoveItem = (item) => {
     dispatch(decrement(item));
+    totalPriceCalculation()
   };
   const IncreaseQuantity = (item) => {
     dispatch(quantityIncrement(item));
+    totalPriceCalculation()
   };
   const DecreaseQuantity = (item) => {
-    dispatch(quantityDecrement(item));
-    // const cartItemCheck = cartItem.Carts.find((e) => e._id === item._id);
-    // if (cartItemCheck.quantity > 1) {
-    //   dispatch(quantityDecrement(item));
-    // } else {
-    //   dispatch(decrement(item));
-    // }
-  };
+    const cartItemCheck = cartItem?.find((e) => e._id === item._id);
+ 
 
-  useEffect(() => {
-    console.log(cartItem.Carts);
-    let totalprice = 0;
-    for (let index = 0; index < cartItem.Carts?.length; index++) {
-      totalprice +=
-        cartItem.Carts[index].price * cartItem.Carts[index].quantity;
+    if(cartItemCheck.quantity <= 1){
+      dispatch(decrement(item));
     }
-    setCalculateTotalprice(totalprice);
-    console.log(totalprice);
-  }, [cartItem.Carts]);
+    else{ dispatch(quantityDecrement(item));}
+    totalPriceCalculation()
+  };
+const totalPriceCalculation = ()=>{
+  let totalprice = 0;
+  for (let index = 0; index < cartItem?.length; index++) {
+    totalprice +=
+      cartItem[index].price * cartItem[index].quantity;
+  }
+  setCalculateTotalprice(totalprice);
+}
+  useEffect(() => {
+    totalPriceCalculation()
+   
+  }, [cartItem]);
   return (
     <div className="container cart-height cart-top-div">
       <div className="text-center ">
         <Typography className="cart-count-text">
-          Your Cart ({cartItem.numberCart} Items){" "}
+          Your Cart ({cartItem?.length} Items){" "}
         </Typography>
-        {cartItem.numberCart === 0 && <Link to="/app/home">Back to home</Link>}
+        {cartItem?.length === 0 && <Link to="/app/home">Back to home</Link>}
       </div>
 
-      {cartItem.numberCart !== 0 && (
+      {cartItem?.length !== 0 && (
         <div className="cart-page">
           <div className="cart-div">
             <table>
@@ -72,7 +77,7 @@ const Cart = () => {
                 <th>Quantity</th>
                 <th>Total</th>
               </tr>
-              {cartItem.Carts.map((element, key) => (
+              {cartItem?.map((element, key) => (
                 <tr key={key}>
                   <td>
                     <div className="cart-info">

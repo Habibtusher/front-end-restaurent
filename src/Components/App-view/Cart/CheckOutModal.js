@@ -21,16 +21,16 @@ const CheckOutModal = ({
   var userInfo = JSON.parse(localStorage.getItem("user"));
   const history = useHistory();
   const onChange = (e) => {
-    console.log("radio checked", e.target.value);
+
     setValue(e.target.value);
   };
 
   const orderBtnDisable = value === 2 && paymentStatus !== 200;
-  console.log("object,", orderBtnDisable);
+
   const makePayment = (token) => {
     const body = {
       token,
-      product: cartItem.Carts,
+      product: cartItem,
     };
     const headers = {
       "Content-Type": "application/json",
@@ -42,9 +42,9 @@ const CheckOutModal = ({
       body: JSON.stringify(body),
     })
       .then((res) => {
-        console.log(res);
+
         const { status } = res;
-        console.log("status", status);
+
         setPaymentStatus(status);
       })
       .catch((err) => console.log(err));
@@ -64,7 +64,7 @@ const CheckOutModal = ({
 
     if (userInfo.address.state1 && userInfo.address.state) {
       const { data } = await getAllData(generate_order, orderData);
-      console.log(data);
+
       message.success("order placed");
       dispatch(cleanCart());
     } else {
@@ -72,7 +72,6 @@ const CheckOutModal = ({
       history.push("/app/user/profile");
     }
 
-    console.log("userInfo", orderData);
   };
   return (
     <Modal

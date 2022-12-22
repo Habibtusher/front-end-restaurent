@@ -1,0 +1,83 @@
+.dashboard-features {
+  background-color: #282d32;
+  min-height: 99%;
+  text-align: center;
+  position: fixed;
+  width:250px;
+} 
+@media (max-width: 1399px) {
+    .dashboard-features {
+   
+        width:220px;
+      } 
+  }
+ .dashboard-features .typography {
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 10px 0px;
+  margin-left: 50px;
+text-transform: uppercase;
+}
+.dashboard-features .typography-selected {
+  background-color: white;
+  border-radius: 25px 0 0 25px;
+  color: black;
+}
+/* .dashboard-features {
+  
+    height: 99%;
+    background: linear-gradient(#282d32, #282d32);
+    font-size: 20px;
+    float: left;
+    position: fixed;
+   
+ 
+} */
+
+/* .dashboard-features > a {
+    position: relative;
+    top: 20px;
+    display: block;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 80%;
+    height: 50px;
+    text-align: center;
+    float: right;
+    border-radius: 10px 0 0 10px;
+    margin-top: 20px;
+    line-height: 50px;
+    transition: color .5s;
+    color: #fdfff4;
+} */
+
+/* .dashboard-features > a:target {
+    color: #2a2a2a;
+    background-color: white;
+}
+
+.dashboard-features > a::after, .dashboard-features > a::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: 0;
+    width: 20px;
+    height: 50px;
+    border-radius: 0 0 25px 0;
+    z-index: -1;
+}
+
+.dashboard-features > a::before {
+    top: auto;
+    bottom: -50px;
+    border-radius: 0 25px 0 0;
+}
+
+.dashboard-features > a:target::after {
+    box-shadow: 0 25px 0 0 #fdfff4;
+}
+
+.dashboard-features > a:target::before {
+    box-shadow: 0 -25px 0 0 #fdfff4;
+} */

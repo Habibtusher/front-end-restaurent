@@ -35,11 +35,12 @@ const Home = ({ setShow, show }) => {
     price: 100,
     productBy: "yellow",
   });
-  const cartItem = useSelector((state) => state.cart);
+  const cartItem = useSelector((state) => state?.cart);
+
   // const cart = useSelector((state) => state.conter.value);
   const dispatch = useDispatch();
 
-  console.log(cartItem);
+
 
   const settings = {
     dots: true,
@@ -50,11 +51,11 @@ const Home = ({ setShow, show }) => {
   };
 
   const onChange = (currentSlide) => {
-    console.log(currentSlide);
+
   };
 
   const onSearch = async (e) => {
-    console.log(e);
+
     setLoading(true);
     const searchValue = {
       name: e,
@@ -78,7 +79,7 @@ const Home = ({ setShow, show }) => {
   }, [filterCategory]);
 
   const handleAddToCart = (item) => {
-    const cartItemCheck = cartItem.Carts?.find((e) => e._id === item._id);
+    const cartItemCheck = cartItem?.find((e) => e._id === item._id);
     if (cartItemCheck) {
       dispatch(quantityIncrement(item));
     } else {
@@ -86,14 +87,13 @@ const Home = ({ setShow, show }) => {
     }
   };
   const decrementCartItem=(item)=>{
-    dispatch(quantityDecrement(item));
-    // const cartItemCheck = cartItem.Carts.find((e) => e._id === item._id);
-    // if(cartItemCheck.quantity > 1){
-    //   dispatch(quantityDecrement(item));
-    // }
-    // else{
-    //   dispatch(decrement(item))
-    // }
+    const cartItemCheck = cartItem?.find((e) => e._id === item._id);
+    if(cartItemCheck.quantity <= 1){
+      dispatch(decrement(item));
+    }
+    else{ dispatch(quantityDecrement(item));}
+   
+
   }
   const incrementCartItem=(item)=>{
     dispatch(quantityIncrement(item));
@@ -114,25 +114,7 @@ const Home = ({ setShow, show }) => {
           </div>
         </div>
         <div className="image1"></div>
-        {/* <div style={{maxWidth:"100%"}}>
-          <Slider {...settings}>
-            <div className="image1">
-         
-                
-         
-            </div>
-            <div className="image2">
-         
-              
-            
-            </div>
-            <div className="image3">
-          
-              
-        
-            </div>
-          </Slider>
-        </div> */}
+       
       </div>
 
       <Typography
@@ -160,7 +142,10 @@ const Home = ({ setShow, show }) => {
 
                         className="card-style"
                         hoverable
+                      
                         style={{
+                          boxShadow:
+                          "0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 4px 15px 0 rgba(0, 0, 0, 0.15)",
                           width: 240,
                           
                         }}
@@ -184,11 +169,11 @@ const Home = ({ setShow, show }) => {
                           <Typography style={{ height: "40px" }}>
                             {e.name} ৳{e.price}
                           </Typography>
-                          {cartItem.Carts?.find((item) => item._id === e._id) ? (
+                          {cartItem.find((item) => item._id === e._id) ? (
                             <div className="text-center incre-decre">
                               <div className="d-flex align-items-center justify-content-around incre-decre-div">
                                <AiOutlineMinusCircle  onClick={() => decrementCartItem(e)} className="minus" />
-                              {cartItem.Carts?.find((item) => item._id === e._id).quantity}
+                              {cartItem.find((item) => item._id === e._id).quantity}
                               <AiOutlinePlusCircle onClick={() => incrementCartItem(e)} className="plus" />
                               </div>
                             </div>
