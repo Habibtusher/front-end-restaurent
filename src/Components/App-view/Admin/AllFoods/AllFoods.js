@@ -11,6 +11,7 @@ import AddFoodModal from "../AddFoodModal/AddFoodModal";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import DeleteConfirmModal from "../../../CommonModal/DeleteConfirmModal";
+import { toast } from "react-toastify";
 const AllFoods = () => {
   const [showModal, setShowModal] = useState(false);
   const [allFoods, setAllFoods] = useState([]);
@@ -38,7 +39,7 @@ const AllFoods = () => {
     const { data } = await deleteItem(delete_food, value);
     console.log(data);
     if (data.status === "success") {
-      message.success(data.message);
+      toast.success(data.message);
     }
     getAllFood();
     setDeleteModal(false);

@@ -2,6 +2,7 @@ import { Button, Card, Form, Input, message } from "antd";
 import axios from "axios";
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import { register } from "../../../Api/ApiConstant";
 const Register = () => {
   const [loading, setLoading] = useState(false);
@@ -16,16 +17,16 @@ const Register = () => {
       passwordConfirm: values.passwordConfirm,
     };
     if (values.password !== values.passwordConfirm) {
-      message.error("password mismatch");
+      toast.error("password mismatch");
     } else {
       try {
         const { data } = await axios.post(register, newData);
         if (data.status === "success") {
-          message.success(data.message);
+          toast.success(data.message);
           history.push("/auth/login");
         }
       } catch (error) {
-        message.error(error.response.data.message);
+        toast.error(error.response.data.message);
       }
       //   else if(data.status === "fail"){
       //     alert("i am on else");

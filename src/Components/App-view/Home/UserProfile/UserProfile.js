@@ -34,6 +34,7 @@ import {
 } from "../../../../Api/CommonService";
 import "./userProfile.css";
 import ViewOrderDetails from "./ViewOrderDetails";
+import { toast, ToastContainer } from "react-toastify";
 const { Paragraph, Text } = Typography;
 const { Link } = Anchor;
 const UserProfile = () => {
@@ -104,7 +105,8 @@ const UserProfile = () => {
         newData
       );
       if (data.status === "success") {
-        message.success("profile update successfully");
+        toast.success('profile update successfully');
+        // message.success("profile update successfully");
         setModal1Visible(true);
         getProfile();
       }
@@ -146,7 +148,7 @@ const UserProfile = () => {
     try {
       const { data } = await deleteUserProfile(`${delete_user}${User.email}`);
       if (data.status === "success") {
-        message.success("profile deleted successfully");
+        toast.success("profile deleted successfully");
         localStorage.removeItem("user");
         localStorage.removeItem("access_token");
         history.push("");
@@ -165,7 +167,7 @@ const UserProfile = () => {
         newData
       );
       if (data.status === "success") {
-        message.success("profile update successfully");
+        toast.success("profile update successfully");
         setModal1Visible(true);
         getProfile();
       }
@@ -203,7 +205,8 @@ const UserProfile = () => {
         newData
       );
       if (data.status === "success") {
-        message.success("profile image deleted");
+        toast.success("profile image deleted")
+       
         setModal1Visible(true);
         getProfile();
       }
@@ -318,27 +321,6 @@ const UserProfile = () => {
   return (
     <Spin spinning={loading}>
       <div className="container user-top ">
-        {/* <div style={{ display: "flex" }}>
-          <Avatar
-            size={50}
-            src={
-              userProfile?.photo
-                ? userProfile?.photo
-                : "https://joeschmoe.io/api/v1/random"
-            }
-          />
-          <div style={{ marginLeft: "15px" }}>
-            <Typography.Title
-              level={2}
-              style={{ margin: 0, fontSize: "25px", color: "#595959" }}
-            >
-              Profile Info
-            </Typography.Title>
-            <Paragraph style={{ marginTop: "-2px", fontSize: "13px" }}>
-              Set Up Your Profile Info
-            </Paragraph>
-          </div>
-        </div> */}
 
         <Row gutter={[5, 5]} style={{ marginTop: "20px" }}>
           <Col
@@ -661,6 +643,7 @@ const UserProfile = () => {
           />
         </Row>
       </div>
+
     </Spin>
   );
 };

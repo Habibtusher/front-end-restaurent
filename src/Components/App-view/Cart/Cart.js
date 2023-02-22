@@ -12,6 +12,9 @@ import {
   quantityIncrement,
 } from "../../../redux/Cart/actions";
 import { Link, useHistory } from "react-router-dom";
+import { loadStripe } from "@stripe/stripe-js";
+import { toast } from "react-toastify";
+
 const Cart = () => {
   const cartItem = useSelector((state) => state.cart);
 
@@ -24,7 +27,7 @@ const Cart = () => {
     if (userInfo) {
       setCheckOutModal(true);
     } else {
-      message.warning("please login first");
+      toast.error("please login first");
       history.push("/auth/login");
     }
   };
@@ -146,6 +149,7 @@ const totalPriceCalculation = ()=>{
         setCheckOutModal={setCheckOutModal}
         checkOutModal={checkOutModal}
       />
+    
     </div>
   );
 };

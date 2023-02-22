@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { login } from "../../../Api/ApiConstant";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [isRemember, setIsRemember] = useState(false);
@@ -15,7 +16,7 @@ const history = useHistory()
     try {
       const { data } = await axios.post(login, values);
       if (data.status === "success") {
-        message.success("success");
+        toast.success("Login successfully!");
         // console.log(data.data.user);
         
         localStorage.setItem("access_token",JSON.stringify(data.token));
@@ -23,7 +24,7 @@ const history = useHistory()
         history.push("")
       }
     } catch (err) {
-      message.error(err.response.data.message);
+      toast.error(err.response.data.message);
     }
   };
 

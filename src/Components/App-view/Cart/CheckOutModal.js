@@ -1,6 +1,6 @@
 import { Button, message, Modal, Radio, Space, Typography } from "antd";
 import React, { useState } from "react";
-import StripeCheckout from "react-stripe-checkout";
+
 import { MdOutlineDownloadDone } from "react-icons/md";
 import { base_url } from "../../../Api/Baseurl";
 import { useDispatch } from "react-redux";
@@ -8,6 +8,12 @@ import { cleanCart } from "../../../redux/Cart/actions";
 import { useHistory } from "react-router-dom";
 import { getAllData } from "../../../Api/CommonService";
 import { generate_order } from "../../../Api/ApiConstant";
+import CheckoutForm from "./CheckoutForm/CheckoutForm";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUSLISH_KEY);
 const CheckOutModal = ({
   checkOutModal,
   setCheckOutModal,
@@ -17,39 +23,18 @@ const CheckOutModal = ({
   const [value, setValue] = useState(1);
 
   const [paymentStatus, setPaymentStatus] = useState(1);
+  const [paymentInfo, setPaymentInfo] = useState();
   const dispatch = useDispatch();
   var userInfo = JSON.parse(localStorage.getItem("user"));
+
   const history = useHistory();
   const onChange = (e) => {
 
     setValue(e.target.value);
   };
-
   const orderBtnDisable = value === 2 && paymentStatus !== 200;
-
-  const makePayment = (token) => {
-    const body = {
-      token,
-      product: cartItem,
-    };
-    const headers = {
-      "Content-Type": "application/json",
-    };
-
-    return fetch(`${base_url}/payment`, {
-      method: "POST",
-      headers,
-      body: JSON.stringify(body),
-    })
-      .then((res) => {
-
-        const { status } = res;
-
-        setPaymentStatus(status);
-      })
-      .catch((err) => console.log(err));
-  };
   const handleOrder = async () => {
+    console.log("click order");
     const orderData = {
       address: userInfo.address,
       email: userInfo.email,
@@ -59,20 +44,33 @@ const CheckOutModal = ({
       totalAmount: calculateTotalprice,
       date: Date.now(),
       paymentStatus: value === 1 ? "Cash on Dalivery" : "Paid",
-      status:"Order Placed"
+      status:"Order Placed",
+      transactionId:paymentInfo?.transactionId ? paymentInfo?.transactionId : ""
     };
 
     if (userInfo.address.state1 && userInfo.address.state) {
       const { data } = await getAllData(generate_order, orderData);
-
-      message.success("order placed");
+      // toast('🦄 Wow so easy!', {
+      //   position: "top-right",
+      //   autoClose: 5000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   theme: "colored",
+      //   });
+      toast.success("Order placed");
+  
       dispatch(cleanCart());
+      setCheckOutModal(false);
     } else {
-      message.error("please add your address");
+      toast.error("please add your address");
       history.push("/app/user/profile");
     }
 
   };
+
   return (
     <Modal
       title="Check Out"
@@ -85,7 +83,7 @@ const CheckOutModal = ({
         <Button
           onClick={() => {
             handleOrder();
-            setCheckOutModal(false);
+            
           }}
           className="button-style"
           disabled={orderBtnDisable}
@@ -102,24 +100,22 @@ const CheckOutModal = ({
             <Radio value={2}>Card Payment</Radio>
           </Space>
         </Radio.Group>
-        {value === 2 && paymentStatus !== 200 && (
+        {value === 2 && (
           <div className="p-4 text-center">
-            <StripeCheckout
-              token={makePayment}
-              name="Pay Now"
-              amount={calculateTotalprice * 100}
-              // shippingAddress
-              // billingAddress
-              stripeKey="pk_test_51Ljyj5SBDj4qcoMhNCjVsjWxtGGEVjMVgjiquW6ssXwZ3IStRyy5SzTO9OnhxYdyhwiRd7DJjo0sEHRoSJKNksaI00wGCHeCCL"
+              <Elements stripe={stripePromise}>
+            <CheckoutForm
+            price={calculateTotalprice}
+            email={userInfo.email}
+            name={userInfo.firstName + " " + userInfo.lastName}
+            setPaymentStatus={setPaymentStatus}
+            setPaymentInfo={setPaymentInfo}
             />
+            </Elements>
           </div>
         )}
-        {value === 2 && paymentStatus === 200 && (
-          <div className="p-4 mt-2 text-center done-text">
-            {" "}
-            <MdOutlineDownloadDone className="ok-icon" /> Payment Done
-          </div>
-        )}
+        {/* {value === 2 && paymentStatus === 200 && (
+         
+        )} */}
       </div>
     </Modal>
   );

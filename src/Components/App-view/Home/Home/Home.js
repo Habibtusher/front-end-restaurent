@@ -12,16 +12,11 @@ import {
 import React, { useEffect, useState } from "react";
 import Footer from "../Footer/Footer";
 import Sidenav from "../Layout/Sidenav";
-import image1 from "../../../../image/pic1.jpg";
-import image2 from "../../../../image/pic2.jpg";
-import image3 from "../../../../image/pic3.jpg";
-import Slider from "react-slick";
 import "./Home.css";
 import { getAllData } from "../../../../Api/CommonService";
 import { get_all_food } from "../../../../Api/ApiConstant";
-import { AiFillPlusCircle, AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai";
-import StripeCheckout from "react-stripe-checkout";
-import { resolveOnChange } from "antd/lib/input/Input";
+import {  AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai";
+
 import { useDispatch, useSelector } from "react-redux";
 import { decrement, increment, quantityDecrement, quantityIncrement } from "../../../../redux/Cart/actions";
 const { Meta } = Card;

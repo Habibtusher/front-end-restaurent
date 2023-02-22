@@ -18,6 +18,7 @@ import axios from "axios";
 import "./AddFoodModal.css";
 import { create } from "../../../../Api/CommonService";
 import { insert_food } from "../../../../Api/ApiConstant";
+import { toast } from "react-toastify";
 const { Option } = Select;
 const AddFoodModal = ({
   showModal,
@@ -46,7 +47,7 @@ const AddFoodModal = ({
    
     const { data } = await create(insert_food, value);
     if (data.status === "success") {
-      message.success(data.message);
+      toast.success(data.message);
 
       getAllFood();
     }
