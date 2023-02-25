@@ -41,7 +41,7 @@ const items = [
 
 const Adminsidebar = ({ show, setShow, current, setCurrent }) => {
   const [placement, setPlacement] = useState("left");
-  const [adminSidebarMenu, setAdminSidebarMenu] = useState(1);
+  const [adminSidebarMenu, setAdminSidebarMenu] = useState(0);
 
   const onClick = (e) => {
     console.log("click ", e);
@@ -58,6 +58,14 @@ const Adminsidebar = ({ show, setShow, current, setCurrent }) => {
           {/* <a onClick={()=>setCurrent(1)} href="#all" id="all">all foods</a>
         <a onClick={()=>setCurrent(2)} href="#orders" id="orders">orders</a>
         <a  onClick={()=>setCurrent(3)}href="#add" id="add">Add Admin</a> */}
+          <Typography
+            onClick={() => setCurrent(0)}
+            className={
+              current === 0 ? "typography-selected typography" : "typography"
+            }
+          >
+            Dashboard
+          </Typography>
           <Typography
             onClick={() => setCurrent(1)}
             className={
@@ -115,14 +123,44 @@ const Adminsidebar = ({ show, setShow, current, setCurrent }) => {
                 className="drawer-cross-icon"
               />
             </div>
-
-            <Menu
-              onClick={onClick}
-              defaultOpenKeys={["Menu"]}
-              selectedKeys={[current]}
-              mode="inline"
-              items={items}
-            />
+            <div className="dashboard-features">
+          {/* <a onClick={()=>setCurrent(1)} href="#all" id="all">all foods</a>
+        <a onClick={()=>setCurrent(2)} href="#orders" id="orders">orders</a>
+        <a  onClick={()=>setCurrent(3)}href="#add" id="add">Add Admin</a> */}
+          <Typography
+            onClick={() => setCurrent(0)}
+            className={
+              current === 0 ? "typography-selected typography" : "typography"
+            }
+          >
+            Dashboard
+          </Typography>
+          <Typography
+            onClick={() => setCurrent(1)}
+            className={
+              current === 1 ? "typography-selected typography" : "typography"
+            }
+          >
+            All Food
+          </Typography>
+          <Typography
+            onClick={() => setCurrent(2)}
+            className={
+              current === 2 ? "typography-selected typography" : "typography"
+            }
+          >
+            Orders
+          </Typography>
+          <Typography
+            onClick={() => setCurrent(3)}
+            className={
+              current === 3 ? "typography-selected typography" : "typography"
+            }
+          >
+            Add Admin
+          </Typography>
+        </div>
+         
           </div>
         </Drawer>
       </div>

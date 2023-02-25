@@ -13,7 +13,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUSLISH_KEY);
+const stripePromise = loadStripe("pk_test_51MeB7iKdkM5q6ytT23zglHkOuOiggLciEaEhAvBgB7fOsUvfy8tXFRvzwTnrcZnrU6MT9rT3IamflkWtv1wjtgR4000DdwXjzx");
 const CheckOutModal = ({
   checkOutModal,
   setCheckOutModal,

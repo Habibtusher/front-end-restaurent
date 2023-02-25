@@ -61,20 +61,7 @@ const Orders = () => {
   return (
     <div className="p-4">
       <Typography className="orders-title">Orders</Typography>
-      <Row className="mt-3 mb-3" gutter={[30, 16]}>
-        <Col md={6} sm={12}>
-          <div className="orders-div1 order-type"></div>
-        </Col>
-        <Col md={6} sm={12}>
-          <div className="orders-div2 order-type"></div>
-        </Col>
-        <Col md={6} sm={12}>
-          <div className="orders-div3 order-type"></div>
-        </Col>
-        <Col md={6} sm={12}>
-          <div className="orders-div4 order-type"></div>
-        </Col>
-      </Row>
+     
 
       <Table
         columns={columns}

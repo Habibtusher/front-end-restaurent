@@ -366,45 +366,7 @@ const UserProfile = () => {
                 Security{" "}
               </Typography>
             </Card>
-            {/* <Card
-              style={{
-                width: 200,
-                padding: "10px",
-               
-              }}
-            >
-              <Anchor affix={false} targetOffset={targetOffset}>
-                <Link
-                  style={{
-                    display: "block",
-                    paddingBottom: "12px",
-                    color: "#595959",
-                  }}
-                  href="#profile"
-                  title="Profile Info"
-                />
-
-                <Link
-                  style={{
-                    display: "block",
-                    paddingBottom: "12px",
-                    color: "#595959",
-                  }}
-                  href="#history"
-                  title="Order History"
-                />
-
-                <Link
-                  style={{
-                    display: "block",
-                    paddingBottom: "12px",
-                    color: "#595959",
-                  }}
-                  href="#security"
-                  title="Account Security"
-                />
-              </Anchor>
-            </Card> */}
+   
           </Col>
           <Col
             className=" "
@@ -417,7 +379,7 @@ const UserProfile = () => {
               <Card className="p-3">
                 <div id="profile">
                   <div className="d-flex justify-content-between">
-                    <Typography style={{ fontSize: "20px" }}>
+                    <Typography className="error-color" style={{ fontSize: "20px" }}>
                       Profile Details
                     </Typography>
                     <div>
