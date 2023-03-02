@@ -20,7 +20,7 @@
 text-transform: uppercase;
 }
 .dashboard-features .typography-selected {
-  background-color: white;
+  background-color: #F8FBFF;
   border-radius: 25px 0 0 25px;
   color: black;
 }
