@@ -128,7 +128,7 @@ const Home = ({ setShow, show }) => {
             />
           </Col>
           <Col className="food-item pb-3" sm={23} lg={20}>
-            <Row gutter={[10, 10]}>
+            <Row gutter={[20,20]}>
               {allFoods.length ? (
                 <>
                   {allFoods?.map((e) => (
@@ -141,7 +141,7 @@ const Home = ({ setShow, show }) => {
                         style={{
                           boxShadow:
                           "0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 4px 15px 0 rgba(0, 0, 0, 0.15)",
-                          width: 240,
+                          width: 220,
                           
                         }}
                         cover={
